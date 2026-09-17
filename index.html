@@ -178,6 +178,12 @@ button,.btn,[class*="button"]{
 .case-form textarea{resize:vertical;min-height:110px}.case-form select option{background:#06130c;color:#effff6}
 .case-warning{margin-top:17px;padding:14px 16px;border-left:3px solid #ffd166;border-radius:0 12px 12px 0;background:rgba(60,45,4,.25);color:#e8e2c9;font-size:.9rem}
 .case-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.case-actions button{font:inherit;cursor:pointer}.case-status{min-height:1.4em;margin:13px 0 0!important;font-size:.9rem}
+.case-submit-area{margin-top:22px;padding:16px;border:1px solid rgba(101,243,177,.25);border-radius:16px;background:rgba(2,18,8,.72)}
+.case-submit-btn{min-width:240px;min-height:52px;font-size:1rem;letter-spacing:.05em;border:2px solid rgba(101,243,177,.5)!important;background:linear-gradient(135deg,#0a8f55,#18c77b)!important;box-shadow:0 14px 34px rgba(24,199,123,.25)!important}
+.case-submit-btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.case-submit-note{margin:12px 2px 0!important;color:#cfe8d9;font-size:.88rem;line-height:1.55}
+.case-submit-note a{color:#65f3b1}
+
 @media(max-width:700px){.form-grid{grid-template-columns:1fr}.case-form label.full{grid-column:auto}.case-intake{padding:22px}}
 </style>
 <style id="iforce-home-background-fix">
@@ -473,7 +479,12 @@ html,body{min-height:100%;background:#020b06!important}
           </div>
         </div>
 
-        <form id="caseForm" class="case-form">
+        <form id="caseForm" class="case-form" method="POST" action="https://formsubmit.co/iForcehk@consultant.com" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" value="New iForce Hackers Case Report">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_next" value="">
+
           <div class="form-grid">
             <label>Full name *<input name="name" required autocomplete="name" placeholder="Your name"></label>
             <label>Email address *<input name="email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
@@ -496,10 +507,11 @@ html,body{min-height:100%;background:#020b06!important}
             <label class="full">Case report file (optional)<input id="caseFile" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.zip"></label>
           </div>
           <div class="case-warning"><strong>Important:</strong> Do not submit passwords, private keys, seed/recovery phrases, authentication codes, payment-card numbers, or other credentials. Only submit information you are authorized to share.</div>
-          <div class="case-actions">
-            <button class="btn" type="submit">Prepare Case Email</button>
+          <div class="case-actions case-submit-area">
+            <button class="btn case-submit-btn" type="submit"type="submit">SUBMIT CASE REPORT</button>
             <a class="btn secondary" href="mailto:iForcehk@consultant.com?subject=Ifoce%20Hackers%20Case%20Report">File a Case Report by Email</a>
           </div>
+          <p class="case-submit-note"><strong>How submission works:</strong> clicking <strong>SUBMIT CASE REPORT</strong> prepares an email addressed to <a href="mailto:iForcehk@consultant.com">iForcehk@consultant.com</a>. Review the message, attach any selected report file, and press Send in your email app.</p>
           <p id="caseStatus" class="case-status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -594,7 +606,7 @@ html,body{min-height:100%;background:#020b06!important}
 const caseForm = document.getElementById('caseForm');
 if (caseForm) {
   caseForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+    
     const data = new FormData(caseForm);
     const file = document.getElementById('caseFile');
     const subject = `New Case Submission - ${data.get('caseType') || 'Case Report'}`;

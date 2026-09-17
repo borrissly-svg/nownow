@@ -166,6 +166,20 @@ button,.btn,[class*="button"]{
 .iforce-dot{width:8px;height:8px;border-radius:50%;background:#315646}
 .iforce-dot.active{background:var(--if-green)}
 </style>
+<style id="iforce-case-form">
+.case-intake{padding:30px;border:1px solid rgba(32,245,154,.25);border-radius:24px;background:rgba(1,16,9,.76);box-shadow:0 25px 70px rgba(0,0,0,.26)}
+.case-intake h3{font-size:clamp(1.6rem,3vw,2.25rem);margin:8px 0 10px}.case-intake p{color:var(--if-muted)}
+.case-intake a{color:var(--if-green3)}
+.case-form{margin-top:22px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.case-form label{display:flex;flex-direction:column;gap:7px;color:#dfffee;font-weight:700;font-size:.92rem}
+.case-form label.full{grid-column:1/-1}
+.case-form input,.case-form select,.case-form textarea{width:100%;border:1px solid rgba(32,245,154,.22);border-radius:12px;background:rgba(0,8,5,.72);color:#effff6;padding:13px 14px;font:inherit;outline:none}
+.case-form input:focus,.case-form select:focus,.case-form textarea:focus{border-color:rgba(32,245,154,.65);box-shadow:0 0 0 3px rgba(32,245,154,.08)}
+.case-form textarea{resize:vertical;min-height:110px}.case-form select option{background:#06130c;color:#effff6}
+.case-warning{margin-top:17px;padding:14px 16px;border-left:3px solid #ffd166;border-radius:0 12px 12px 0;background:rgba(60,45,4,.25);color:#e8e2c9;font-size:.9rem}
+.case-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.case-actions button{font:inherit;cursor:pointer}.case-status{min-height:1.4em;margin:13px 0 0!important;font-size:.9rem}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr}.case-form label.full{grid-column:auto}.case-intake{padding:22px}}
+</style>
 <style id="iforce-home-background-fix">
 html,body{min-height:100%;background:#020b06!important}
 .site-bg{
@@ -449,6 +463,46 @@ html,body{min-height:100%;background:#020b06!important}
         <div class="contact-item"><strong>Email</strong><br><a href="mailto:iForcehk@consultant.com">iForcehk@consultant.com</a></div>
         <div class="contact-item"><strong>Phone / WhatsApp</strong><br><a href="https://wa.me/12408033706">+1 240 803 3706</a></div>
       </div>
+
+      <div class="case-intake" style="margin-top:28px;text-align:left">
+        <div class="case-intake-head">
+          <div>
+            <div class="kicker">Submit your case</div>
+            <h3>Tell iForce Hackers what happened</h3>
+            <p>Visitors can submit a case summary through the form below. When you press <strong>Prepare Case Email</strong>, your email app will open with the case details addressed to <a href="mailto:iForcehk@consultant.com">iForcehk@consultant.com</a>. You can also attach a case report, screenshots, invoices, ownership records, or other relevant documents before sending.</p>
+          </div>
+        </div>
+
+        <form id="caseForm" class="case-form">
+          <div class="form-grid">
+            <label>Full name *<input name="name" required autocomplete="name" placeholder="Your name"></label>
+            <label>Email address *<input name="email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+            <label>Phone / WhatsApp<input name="phone" autocomplete="tel" placeholder="Optional"></label>
+            <label>Case type *
+              <select name="caseType" required>
+                <option value="">Select a case type</option>
+                <option>Lost or stolen asset</option>
+                <option>Cryptocurrency / digital asset investigation</option>
+                <option>Device or account access issue</option>
+                <option>Digital forensics / incident investigation</option>
+                <option>Security assessment</option>
+                <option>Other authorized investigation</option>
+              </select>
+            </label>
+            <label class="full">What happened? *<textarea name="summary" required rows="5" placeholder="Briefly describe the situation, what you own or are authorized to investigate, and what you need help understanding."></textarea></label>
+            <label>Approximate date / time<input name="date" placeholder="e.g. September 10, 2026"></label>
+            <label>Reference / case number<input name="reference" placeholder="Optional"></label>
+            <label class="full">Relevant evidence or records<textarea name="evidence" rows="4" placeholder="Describe any transaction IDs, serial numbers, tracking numbers, URLs, police/report references, ownership records, or other lawful evidence. Do not enter passwords or private keys."></textarea></label>
+            <label class="full">Case report file (optional)<input id="caseFile" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.zip"></label>
+          </div>
+          <div class="case-warning"><strong>Important:</strong> Do not submit passwords, private keys, seed/recovery phrases, authentication codes, payment-card numbers, or other credentials. Only submit information you are authorized to share.</div>
+          <div class="case-actions">
+            <button class="btn" type="submit">Prepare Case Email</button>
+            <a class="btn secondary" href="mailto:iForcehk@consultant.com?subject=Ifoce%20Hackers%20Case%20Report">File a Case Report by Email</a>
+          </div>
+          <p id="caseStatus" class="case-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -535,6 +589,42 @@ html,body{min-height:100%;background:#020b06!important}
     },260);
   },6500);
 })();
+
+
+const caseForm = document.getElementById('caseForm');
+if (caseForm) {
+  caseForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const data = new FormData(caseForm);
+    const file = document.getElementById('caseFile');
+    const subject = `New Case Submission - ${data.get('caseType') || 'Case Report'}`;
+    const body = [
+      'iForce Hackers Intelligence - Case Submission',
+      '',
+      `Full name: ${data.get('name') || ''}`,
+      `Email: ${data.get('email') || ''}`,
+      `Phone / WhatsApp: ${data.get('phone') || ''}`,
+      `Case type: ${data.get('caseType') || ''}`,
+      `Approximate date / time: ${data.get('date') || ''}`,
+      `Reference / case number: ${data.get('reference') || ''}`,
+      '',
+      'What happened:',
+      data.get('summary') || '',
+      '',
+      'Relevant evidence or records:',
+      data.get('evidence') || '',
+      '',
+      file && file.files.length ? `Attachment to add before sending: ${file.files[0].name}` : 'Attachment: None selected',
+      '',
+      'I confirm that I am authorized to share the information included in this message.'
+    ].join('\n');
+
+    const mailto = `mailto:iForcehk@consultant.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const status = document.getElementById('caseStatus');
+    status.textContent = 'Your email app should open with the case details prepared. If you selected a file, attach it to the email before sending.';
+    window.location.href = mailto;
+  });
+}
 </script>
 
 </body>

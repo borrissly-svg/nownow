@@ -204,6 +204,42 @@ html,body{min-height:100%;background:#020b06!important}
 }
 </style>
 
+
+<style id="iforce-section-backgrounds">
+#forensics,#process,#articles,#ethics,#contact{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+}
+#forensics::before,#process::before,#articles::before,#ethics::before,#contact::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:-2!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  opacity:.48!important;
+  pointer-events:none!important;
+}
+#forensics::after,#process::after,#articles::after,#ethics::after,#contact::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:-1!important;
+  pointer-events:none!important;
+  background:linear-gradient(180deg,rgba(0,10,5,.60),rgba(0,10,5,.82))!important;
+}
+#forensics::before{background-image:url("assets/iforce-bg-2.png")!important;background-position:center 38%!important}
+#process::before{background-image:url("assets/iforce-bg-3.png")!important;background-position:center 48%!important}
+#articles::before{background-image:url("assets/iforce-bg-1.png")!important;background-position:center 44%!important}
+#ethics::before{background-image:url("assets/iforce-bg-3.png")!important;background-position:center 58%!important}
+#contact::before{background-image:url("assets/iforce-bg-2.png")!important;background-position:center 62%!important}
+#forensics .container,#process .container,#articles .container,#ethics .container,#contact .container{
+  position:relative!important;z-index:1!important
+}
+</style>
+
 </head>
 <body>
 <nav>

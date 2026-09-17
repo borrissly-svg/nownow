@@ -1,10 +1,9 @@
-# Ifoce Hackers Intelligence — Fixed background package
+# Ifoce Hackers — Section Backgrounds
 
-This version fixes the missing home-page background.
+Forensics: iforce-bg-2.png
+Process: iforce-bg-3.png
+Articles: iforce-bg-1.png
+Ethics: iforce-bg-3.png
+Contact: iforce-bg-2.png
 
-Important:
-- Upload the entire `assets` folder together with all HTML files.
-- Do not upload only `index.html`.
-- The home page explicitly uses `assets/iforce-bg-1.png` and also contains an embedded fallback.
-- All three iForce images rotate on the home page.
-- Floating WhatsApp and binary animation remain enabled.
+All three supplied background images remain in assets/.
